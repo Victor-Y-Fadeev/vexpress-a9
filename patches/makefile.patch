@@ -1,0 +1,28 @@
+--- tests/arm32/vexpress-a9/freertos/Makefile	2019-05-19 11:44:36.947807795 +0300
++++ ./Makefile	2019-05-19 21:30:45.057454478 +0300
+@@ -63,7 +63,7 @@
+ 
+ # FreeRTOS specific glue and application source (relative to $srcdir)
+ OTHER_SRCS = port/port.c port/portASM.S ../basic/arch_board.c	\
+-             arm_entry_v7.S glue.c main.c
++             arm_entry_v7.S glue.c src/main.c
+ 
+ CC	= $(CROSS_COMPILE)gcc
+ CPP	= $(CROSS_COMPILE)cpp
+@@ -83,6 +83,7 @@
+ 
+ CPPFLAGS = -I$(srcdir)/../basic -I$(common_srcdir) -I$(common_arch_srcdir) \
+            -I$(freertos_srcdir)/include -I$(srcdir) -I$(srcdir)/port	\
++           -I$(srcdir)/src						\
+            -DTEXT_START=$(BOARD_TEXT_START)				\
+            -DUSR_STACK_SIZE=$(BOARD_USR_STACK_SIZE)
+ 
+@@ -93,7 +94,7 @@
+ CPPFLAGS += -DARM_SECURE_EXTN_IMPLEMENTED
+ endif
+ 
+-CFLAGS  = -mtune=cortex-a9 -march=armv7-a -Wall -Werror  \
++CFLAGS  = -mtune=cortex-a9 -march=armv7-a -Wall -Wno-error  \
+           -nostdlib -msoft-float -marm
+ ASFLAGS = -D__ASSEMBLY__ $(CFLAGS)
+ LDFLAGS = -Wl,-T$(LINK_SCRIPT_GEN) -nostdlib -Wl,--build-id=none

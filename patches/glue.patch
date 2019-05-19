@@ -1,0 +1,20 @@
+--- tests/arm32/vexpress-a9/freertos/glue.c	2019-05-19 11:44:36.947807795 +0300
++++ ./glue.c	2019-05-19 21:32:45.835991764 +0300
+@@ -30,7 +30,7 @@
+ #include <basic_irq.h>
+ #include <basic_stdio.h>
+ 
+-extern void main_blinky(void);
++extern void app_main(void);
+ 
+ /* no MMU support, disabling firmware interrupt handlers */
+ void arm_mmu_syscall(struct pt_regs *regs) {}
+@@ -105,7 +105,7 @@
+ {
+         basic_puts("Welcome to FreeRTOS!\n");
+ 
+-        main_blinky();
++        app_main();
+ 
+         /* Don't expect to reach here. */
+         return 0;

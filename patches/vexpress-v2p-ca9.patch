@@ -1,5 +1,5 @@
---- xvisor/arch/arm/board/generic/dts/arm/vexpress-v2p-ca9.dts	2019-05-19 10:29:28.932094302 +0300
-+++ ./vexpress-v2p-ca9.dts	2019-05-19 10:45:25.316411851 +0300
+--- arch/arm/board/generic/dts/arm/vexpress-v2p-ca9.dts	2019-05-19 21:22:24.426706326 +0300
++++ ./vexpress-v2p-ca9.dts	2019-05-19 21:24:06.089786093 +0300
 @@ -16,11 +16,11 @@
  		bootcmd = /* Mount initrd device */
  			  "vfs mount initrd /",

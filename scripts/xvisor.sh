@@ -1,5 +1,7 @@
 #!/bin/bash
 
+XVISOR=xvisor
+
 DIRECTORY=$(cd `dirname $0` && pwd)
 
 # Load Xvisor module
@@ -8,11 +10,11 @@ git submodule update
 
 # Patch vexpress-v2p-ca9.dts
 cd $DIRECTORY/..
-patch -f xvisor/arch/arm/board/generic/dts/arm/vexpress-v2p-ca9.dts < patches/vexpress-v2p-ca9.patch
+patch -f $XVISOR/arch/arm/board/generic/dts/arm/vexpress-v2p-ca9.dts < patches/vexpress-v2p-ca9.patch
 
 # Build Xvisor
 export CROSS_COMPILE=arm-none-eabi-
-export xvisor_src=xvisor
+export xvisor_src=$XVISOR
 cd $xvisor_src
 
 git submodule init

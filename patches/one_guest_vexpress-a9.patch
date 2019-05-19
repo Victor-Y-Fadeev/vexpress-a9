@@ -1,0 +1,12 @@
+--- tests/arm32/vexpress-a9/xscript/one_guest_vexpress-a9.xscript	2019-05-19 11:44:36.947807795 +0300
++++ ./one_guest_vexpress-a9.xscript	2019-05-19 21:49:21.638335836 +0300
+@@ -6,3 +6,9 @@
+ 
+ # Load guest0 images
+ vfs guest_load_list guest0 /images/arm32/vexpress-a9/nor_flash.list
++
++# Kick Guest0 for starting FreeRTOS
++guest kick guest0
++
++# Bind to virtual UART
++vserial bind guest0/uart0
