@@ -1,3 +1,5 @@
 [submodule "xvisor"]
 	path = xvisor
 	url = https://github.com/xvisor/xvisor.git
+	ignore = dirty
+
