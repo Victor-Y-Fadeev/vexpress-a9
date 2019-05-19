@@ -2,10 +2,9 @@
 
 DIRECTORY=$(cd `dirname $0` && pwd)
 
-# Download enviroment
-sudo apt-get -y install gcc-arm-none-eabi qemu-system-arm
-sudo apt-get -y install flex bison
-sudo apt-get -y install genext2fs
+# Load Xvisor module
+git submodule init
+git submodule update
 
 # Patch vexpress-v2p-ca9.dts
 cd $DIRECTORY/..
