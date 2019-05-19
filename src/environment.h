@@ -16,16 +16,21 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- * @file empty.c
+ * @file environment.h
  * @author Victor Y. Fadeev <victor.y.fadeev@gmail.com>
- * @brief FreeRTOS empty test
+ * @brief Environment library
  */
 
+#ifndef ENVIRONMENT_H
+#define ENVIRONMENT_H
+
 #include "FreeRTOS.h"
-#include "task.h"
+
+#define ITER 100
 
 
-void app_main(void)
-{
-        return;
-}
+void output(const char *str, const int *var, const bool log);
+void single(const char *str, const double average);
+void error(const char *str);
+
+#endif
