@@ -1,9 +1,10 @@
 #!/bin/bash
 
-XVISOR=xvisor
-FREERTOS=FreeRTOS
-PORT=port
-CONFIG=FreeRTOSConfig.h
+XVISOR=modules/xvisor
+PATCH=modules/patches
+FREERTOS=modules/FreeRTOS
+PORT=modules/port
+CONFIG=modules/FreeRTOSConfig.h
 SRC=src
 
 DIRECTORY=$(cd `dirname $0` && pwd)
@@ -15,9 +16,9 @@ cp -rf $PORT $XVISOR/tests/arm32/vexpress-a9/freertos
 cp -f $CONFIG $XVISOR/tests/arm32/vexpress-a9/freertos
 
 # Patch vexpress-a9 source
-patch -f $XVISOR/tests/arm32/vexpress-a9/freertos/glue.c < patches/glue.patch
-patch -f $XVISOR/tests/arm32/vexpress-a9/freertos/Makefile < patches/makefile.patch
-patch -f $XVISOR/tests/arm32/vexpress-a9/xscript/one_guest_vexpress-a9.xscript < patches/one_guest_vexpress-a9.patch
+patch -f $XVISOR/tests/arm32/vexpress-a9/freertos/glue.c < $PATCH/glue.patch
+patch -f $XVISOR/tests/arm32/vexpress-a9/freertos/Makefile < $PATCH/makefile.patch
+patch -f $XVISOR/tests/arm32/vexpress-a9/xscript/one_guest_vexpress-a9.xscript < $PATCH/one_guest_vexpress-a9.patch
 
 # Copy application source
 cp -rf $SRC $XVISOR/tests/arm32/vexpress-a9/freertos

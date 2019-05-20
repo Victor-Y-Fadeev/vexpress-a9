@@ -1,5 +1,4 @@
-[submodule "xvisor"]
-	path = xvisor
-	url = https://github.com/xvisor/xvisor.git
+[submodule "modules/xvisor"]
+	path = modules/xvisor
+	url = https://github.com/xvisor/xvisor
 	ignore = dirty
-

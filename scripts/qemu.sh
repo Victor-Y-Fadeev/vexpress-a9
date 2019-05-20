@@ -1,6 +1,6 @@
 #!/bin/bash
 
-XVISOR=xvisor
+XVISOR=modules/xvisor
 
 DIRECTORY=$(cd `dirname $0` && pwd)
 
