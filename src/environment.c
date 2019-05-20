@@ -34,23 +34,32 @@ void two_points(const double value) {
         basic_printf("%d", (int)(value * 100) % 100);
 }
 
-void output(const char *str, const int *var, const bool log)
-{
+void output(const char *str, int *var, int iter) {
+        var = &var[1];
+        iter--;
+
         basic_printf("\r\n---%s---\r\n", str);
-        basic_printf("Iterations: %d\r\n", ITER);
+        basic_printf("Iterations: %d\r\n", iter);
 
         int average = 0;
-        for (int i = 1; i < ITER; i++) {
+        for (int i = 0; i < iter; i++) {
                 average += var[i];
         }
         basic_printf("Average: ");
-        two_points(((double) average) / (ITER - 1));
+        two_points(((double)average) / iter);
+        basic_printf(" us\r\n");
+
+        double variance = 0;
+        for (int i = 0; i < iter; i++) {
+                double temp = var[i] - ((double)average) / iter;
+                variance += temp * temp;
+        }
+        basic_printf("Variance: ");
+        two_points(variance / iter);
         basic_printf(" us\r\n\r\n");
 
-        if (log) {
-                for (int i = 0; i < ITER; i++) {
-                        basic_printf("#%d switch - %d microsecond\r\n", i, var[i]);
-                }
+        for (int i = 0; i < iter; i++) {
+                basic_printf("#%d switch - %d microsecond\r\n", i, var[i]);
         }
 }
 

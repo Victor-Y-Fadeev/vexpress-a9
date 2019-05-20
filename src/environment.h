@@ -24,12 +24,8 @@
 #ifndef ENVIRONMENT_H
 #define ENVIRONMENT_H
 
-#include "FreeRTOS.h"
 
-#define ITER 100
-
-
-void output(const char *str, const int *var, const bool log);
+void output(const char *str, int *var, int iter);
 void single(const char *str, const double average);
 void error(const char *str);
 
