@@ -7,6 +7,11 @@ git:
 language: cpp
 compiler: gcc
 
+addons:
+    apt:
+        packages:
+            - genext2fs
+
 install:
     - ./scripts/install.sh
     - ./scripts/xvisor.sh
