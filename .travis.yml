@@ -1,0 +1,15 @@
+notifications:
+    email: false
+
+git:
+    depth: 1
+
+language: cpp
+compiler: gcc
+
+install:
+    - ./scripts/install.sh
+    - ./scripts/xvisor.sh
+
+script:
+    - ./scripts/make.sh

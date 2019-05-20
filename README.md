@@ -1,4 +1,4 @@
-FreeRTOS
+FreeRTOS [![Build Status](https://travis-ci.org/Victor-Y-Fadeev/vexpress-a9.svg?branch=master)](https://travis-ci.org/Victor-Y-Fadeev/vexpress-a9)
 ========
 This port runs FreeRTOS v10.2.0 on the Versatile Express with the the ARM Cortex-A9 MPCore.
 It's use [Xvisor](https://github.com/xvisor/xvisor) hypervisor for running FreeRTOS as a guest OS.
