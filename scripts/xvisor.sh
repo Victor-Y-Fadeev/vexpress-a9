@@ -14,7 +14,7 @@ cd $DIRECTORY/..
 patch -f $XVISOR/arch/arm/board/generic/dts/arm/vexpress-v2p-ca9.dts < $PATCH/vexpress-v2p-ca9.patch
 
 # Build Xvisor
-export CROSS_COMPILE=arm-none-gnueabi-
+export CROSS_COMPILE=arm-none-eabi-
 export xvisor_src=$XVISOR
 cd $xvisor_src
 

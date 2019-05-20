@@ -26,7 +26,9 @@ cp -rf $SRC $XVISOR/tests/arm32/vexpress-a9/freertos
 # Build FreeRTOS
 export CROSS_COMPILE=arm-none-eabi-
 cd $XVISOR/tests/arm32/vexpress-a9/freertos
-make
+if ! make ; then
+	exit 1
+fi
 
 # Create the disk image for Xvisor
 cd ../../../..
