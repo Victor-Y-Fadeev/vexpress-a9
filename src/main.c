@@ -45,7 +45,7 @@ static void send_task(void *params);
 
 static QueueHandle_t queue_hndl = NULL;
 
-void main_blinky(void)
+void app_main(void)
 {
         queue_hndl = xQueueCreate(mainQUEUE_LENGTH, sizeof(uint32_t));
 
