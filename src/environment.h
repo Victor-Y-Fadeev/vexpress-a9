@@ -24,6 +24,8 @@
 #ifndef ENVIRONMENT_H
 #define ENVIRONMENT_H
 
+#define clock() (xTaskGetTickCount() * portTICK_RATE_MS)
+
 
 void output(const char *str, int *var, int iter);
 void single(const char *str, const double average);
