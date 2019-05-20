@@ -1,0 +1,20 @@
+notifications:
+    email: false
+
+git:
+    depth: 1
+
+language: cpp
+compiler: gcc
+
+addons:
+    apt:
+        packages:
+            - genext2fs
+
+install:
+    - ./scripts/install.sh
+    - ./scripts/xvisor.sh
+
+script:
+    - ./scripts/make.sh
