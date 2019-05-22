@@ -14,7 +14,7 @@ $ ./scripts/xvisor.sh
 
 To make your project use:
 ```
-$ ./scripts/install.sh
+$ ./scripts/make.sh
 ```
 
 And this for running it at the QEMU:
