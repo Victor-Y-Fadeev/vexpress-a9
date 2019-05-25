@@ -34,7 +34,8 @@ int var[3][ITER];
 int var_full[ITER*3];
 
 
-static void task(void *params) {
+static void task(void *params)
+{
         int n = (int)params;
         int t1, t2, cur_time;
 
@@ -64,14 +65,13 @@ static void task(void *params) {
                 output("Processes switching test", var_full, ITER * 3);
         }
 
-        for (;;);
+        vTaskDelete(NULL);
 }
 
-void app_main(void) { 
+void app_main(void)
+{ 
         xTaskCreate(task, "Task 1", configMINIMAL_STACK_SIZE, (void *)0, tskIDLE_PRIORITY + 1, NULL);
         xTaskCreate(task, "Task 2", configMINIMAL_STACK_SIZE, (void *)1, tskIDLE_PRIORITY + 1, NULL);
         xTaskCreate(task, "Task 3", configMINIMAL_STACK_SIZE, (void *)2, tskIDLE_PRIORITY + 1, NULL);
         vTaskStartScheduler();
-
-        for (;;);
 }
