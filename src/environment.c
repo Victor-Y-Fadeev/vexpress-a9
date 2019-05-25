@@ -24,7 +24,8 @@
 #include "environment.h"
 #include <basic_stdio.h>
 
-void two_points(const double value) {
+void two_points(const double value)
+{
         basic_printf("%d.", (int)value);
 
         if ((int)(value * 100) % 100 < 10) {
@@ -34,7 +35,8 @@ void two_points(const double value) {
         basic_printf("%d", (int)(value * 100) % 100);
 }
 
-void output(const char *str, int *var, int iter) {
+void output(const char *str, int *var, int iter)
+{
         var = &var[1];
         iter--;
 
