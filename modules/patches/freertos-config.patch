@@ -1,5 +1,5 @@
 --- FreeRTOS/Demo/CORTEX_A9_Zynq_ZC702/RTOSDemo/src/FreeRTOSConfig.h	2019-02-18 00:21:08.530272000 +0300
-+++ ./FreeRTOSConfig.h	2019-05-19 15:36:36.015486949 +0300
++++ ./FreeRTOSConfig.h	2019-05-25 22:45:42.258098000 +0300
 @@ -25,10 +25,12 @@
   * 1 tab == 4 spaces!
   */
@@ -58,7 +58,7 @@
  
  /* Include the query-heap CLI command to query the free heap space. */
  #define configINCLUDE_QUERY_HEAP_COMMAND		1
-@@ -101,28 +110,21 @@
+@@ -101,18 +110,11 @@
  #define configMAX_CO_ROUTINE_PRIORITIES 		( 2 )
  
  /* Software timer definitions. */
@@ -78,10 +78,7 @@
  /* Set the following definitions to 1 to include the API function, or zero
  to exclude the API function. */
  #define INCLUDE_vTaskPrioritySet				1
- #define INCLUDE_uxTaskPriorityGet				1
--#define INCLUDE_vTaskDelete						1
-+#define INCLUDE_vTaskDelete						0
- #define INCLUDE_vTaskCleanUpResources			1
+@@ -122,7 +124,7 @@
  #define INCLUDE_vTaskSuspend					1
  #define INCLUDE_vTaskDelayUntil					1
  #define INCLUDE_vTaskDelay						1
