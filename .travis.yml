@@ -13,6 +13,7 @@ addons:
             - genext2fs
 
 install:
+    - sudo apt-get install libnewlib-arm-none-eabi
     - ./scripts/install.sh
     - ./scripts/xvisor.sh
 
