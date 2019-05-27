@@ -25,44 +25,48 @@
 #include "task.h"
 #include "environment.h"
 
-#define ITER 30
+#define ITER 100
 
-int t[3] = { 0, 0, 0 };
+int period[3]= { 0, 0, 0 };
 
-int curent[3] = { 0, 0, 0 };
-int var[3][ITER];
-int var_full[ITER*3];
+int current[3] = { 0, 0, 0 };
+int var[ITER][3];
+int flag = 0;
 
 
-static void task(void *params)
-{
+static void vTask(void *params) {
         int n = (int)params;
-        int t1, t2, cur_time;
+        int first, second, curTime;
 
-        while (curent[n] < ITER) {
-                t1 = t[(n + 1) % 3];
-                t2 = t[(n + 2) % 3];
-                cur_time = clock();
+        while (current[n] < ITER) {
+                first = period[(n + 1) % 3];
+                second = period[(n + 2) % 3];
+                curTime = clock();
 
-                if ((t1 != 0) && (t2 !=0)) {
-                        if (t1 > t2) {
-                                var[n][curent[n]] = cur_time - t2;
+                if (first != 0 && second != 0) {
+                        if (first < second) {
+                                var[current[n]][n] = curTime - first;
                         } else {
-                                var[n][curent[n]] = cur_time - t1;
+                                var[current[n]][n] = curTime - second;
                         }
-                        curent[n]++;
+                        current[n]++;
                 }
-                t[n] = clock();
+                period[n] = clock();
         }
 
         if (n == 0) {
+                while (flag < 2);
+                int varFull[ITER * 3];
+
                 for (int i = 0; i < ITER; i++) {
                         for (int j = 0; j < 3; j++) {
-                                var_full[i * 3 + j] = var[j][i];
+                                varFull[i * 3 + j] = var[i][j];
                         }
                 }
         
-                output("Processes switching test", var_full, ITER * 3);
+                output("Thread", varFull, ITER * 3);
+        } else {
+                flag++;
         }
 
         vTaskDelete(NULL);
@@ -70,8 +74,8 @@ static void task(void *params)
 
 void app_main(void)
 { 
-        xTaskCreate(task, "Task 1", configMINIMAL_STACK_SIZE, (void *)0, tskIDLE_PRIORITY + 1, NULL);
-        xTaskCreate(task, "Task 2", configMINIMAL_STACK_SIZE, (void *)1, tskIDLE_PRIORITY + 1, NULL);
-        xTaskCreate(task, "Task 3", configMINIMAL_STACK_SIZE, (void *)2, tskIDLE_PRIORITY + 1, NULL);
+        xTaskCreate(vTask, "Task 1", configMINIMAL_STACK_SIZE + 1000, (void *)0, tskIDLE_PRIORITY + 1, NULL);
+        xTaskCreate(vTask, "Task 2", configMINIMAL_STACK_SIZE + 1000, (void *)1, tskIDLE_PRIORITY + 1, NULL);
+        xTaskCreate(vTask, "Task 3", configMINIMAL_STACK_SIZE + 1000, (void *)2, tskIDLE_PRIORITY + 1, NULL);
         vTaskStartScheduler();
 }
