@@ -16,9 +16,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- * @file process.c
+ * @file thread.c
  * @author Egor Anikin <egor-anikin@inbox.ru>
- * @brief FreeRTOS process test
+ * @brief FreeRTOS thread test
  */
 
 #include "FreeRTOS.h"
