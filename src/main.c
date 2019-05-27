@@ -16,43 +16,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- * @file process.c
- * @author Egor Anikin <egor-anikin@inbox.ru>
- * @brief FreeRTOS process test
+ * @file empty.c
+ * @author Victor Y. Fadeev <victor.y.fadeev@gmail.com>
+ * @brief FreeRTOS empty test
  */
 
 #include "FreeRTOS.h"
 #include "task.h"
-#include "semphr.h"
-#include "environment.h"
 
-#define ITER 1000000
-
-
-static void task(void *params) {
-	int cur_time, prev_time;
-	double average;
-
-	prev_time = clock();
-	for (int i = 0; i < ITER; i++) {
-		//irqctrl_force(IRQ_NR); 
-	}
-	cur_time = clock();
-
-	average = cur_time - prev_time;
-
-	prev_time = clock();
-	for (int i = 0; i < ITER; i++);
-	cur_time = clock();
-
-	average = (average - cur_time + prev_time) / ITER;
-	single("IRQ", average);
-}
 
 void app_main(void)
-{ 
-        xMutex = xSemaphoreCreateRecursiveMutex();
-
-        xTaskCreate(task, "Task 1", configMINIMAL_STACK_SIZE, (void *)0, tskIDLE_PRIORITY + 1, NULL);
-        vTaskStartScheduler();
+{
+        return;
 }

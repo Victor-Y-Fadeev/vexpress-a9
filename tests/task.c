@@ -16,9 +16,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- * @file empty.c
+ * @file task.c
  * @author Victor Y. Fadeev <victor.y.fadeev@gmail.com>
- * @brief FreeRTOS empty test
+ * @brief FreeRTOS task memory test
  */
 
 #include "FreeRTOS.h"
@@ -26,13 +26,13 @@
 #include "environment.h"
 
 
-static void task(void *params)
+static void vTask(void *params)
 {
 	vTaskDelete(NULL);
 }
 
 void app_main(void)
 {
-        xTaskCreate(task, "Task", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
+        xTaskCreate(vTask, "Task", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
 	vTaskStartScheduler();
 }
