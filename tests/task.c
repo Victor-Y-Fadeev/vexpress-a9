@@ -28,11 +28,11 @@
 
 static void vTask(void *params)
 {
-	vTaskDelete(NULL);
+        vTaskDelete(NULL);
 }
 
 void app_main(void)
 {
         xTaskCreate(vTask, "Task", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
-	vTaskStartScheduler();
+        vTaskStartScheduler();
 }

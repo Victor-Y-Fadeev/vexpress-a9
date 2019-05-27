@@ -47,6 +47,8 @@ static void vTask(void *params)
 
         average = (average - curTime + prevTime) / ITER;
         single("IRQ", average);
+
+        vTaskDelete(NULL);
 }
 
 void app_main(void)
