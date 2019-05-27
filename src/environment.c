@@ -69,8 +69,8 @@ void single(const char *str, const double average)
 {
         basic_printf("\r\n---%s---\r\n", str);
         basic_printf("Average: ");
-        two_points(average);
-        basic_printf(" us\r\n\r\n");
+        two_points(average * 1000);
+        basic_printf(" ns\r\n\r\n");
 }
 
 void error(const char *str)
