@@ -16,9 +16,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- * @file process.c
+ * @file semaphore.c
  * @author Egor Anikin <egor-anikin@inbox.ru>
- * @brief FreeRTOS process test
+ * @brief FreeRTOS semaphore test
  */
 
 #include "FreeRTOS.h"
@@ -26,55 +26,74 @@
 #include "semphr.h"
 #include "environment.h"
 
-#define ITER 1000000
+#define ITER 1000
 #define TASK 2
 
-int curent = 0;
-int curent2 = 0;
-int chek[ITER*TASK];
-int chek2[ITER*TASK];
-double ave[TASK];
+int current[2] = { 0, 0 };
+int check[2][ITER * TASK];
+double average[TASK];
+bool flag = 0;
 
 static SemaphoreHandle_t xMutex = NULL;
 
 
-static void task(void *params) {
-    int n = (int)params; 
+static void vTask(void *params) {
+        int n = (int)params;
+        int curTime, prevTime;
 
-    int cur_time = 0;
-	int prev_time = 0;
-
-	prev_time = clock();
-	for(int i = 0; i < ITER; i++)
-	{
-	        xSemaphoreTake(xMutex, 0);
-                chek[curent] += 1;
-                curent++;
+        prevTime = clock();
+        for (int i = 0; i < ITER; i++) {
+                xSemaphoreTake(xMutex, 0);
+                check[0][current[0]]++;
+                current[0]++;
                 xSemaphoreGive(xMutex);
-	}
-	cur_time = clock();
+        }
+        curTime = clock();
 
-	ave[n] = cur_time - prev_time;
+        average[n] = curTime - prevTime;
 
-	prev_time = clock();
-	for(int i = 0; i < ITER; i++)
-	{
-		chek2[curent2] += 1;
-                curent2++;
-	}
-	cur_time = clock();
+        prevTime = clock();
+        for (int i = 0; i < ITER; i++) {
+                check[1][current[1]]++;
+                current[1]++;
+        }
+        curTime = clock();
 
-	ave[n] = (ave[n] - cur_time + prev_time)/ITER; 
-        if(n == 0)
-        single("Semaphore",ave[n]);
+        average[n] = (average[n] - curTime + prevTime) / ITER;
+
+        if (n == 0) {
+                while (flag == 0);
+
+                for (int i = 0; i < ITER * TASK; i++) {
+                        if (check[0][i] != 0) {
+                                error("Semaphore fail"); 
+                        }
+                }
+
+                double result = 0;
+                for (int i = 0; i < TASK; i++) {
+                        result += average[i];
+                }
+
+                single("Semaphore", result / TASK);
+        } else {
+                flag = 1;
+        }
+
         vTaskDelete(NULL);
 }
 
 void app_main(void)
-{ 
+{
+        for (int i = 0; i < ITER * TASK; i++) {
+                check[0][i] = -1;
+        }
+
         xMutex = xSemaphoreCreateRecursiveMutex();
 
-        xTaskCreate(task, "Task 1", configMINIMAL_STACK_SIZE, (void *)0, tskIDLE_PRIORITY + 1, NULL);
-        xTaskCreate(task, "Task 2", configMINIMAL_STACK_SIZE, (void *)1, tskIDLE_PRIORITY + 1, NULL);
+        if (xMutex != NULL) {
+                xTaskCreate(vTask, "Task 1", configMINIMAL_STACK_SIZE + 1000, (void *)0, tskIDLE_PRIORITY + 1, NULL);
+                xTaskCreate(vTask, "Task 2", configMINIMAL_STACK_SIZE + 1000, (void *)1, tskIDLE_PRIORITY + 1, NULL);
+        }
         vTaskStartScheduler();
 }
