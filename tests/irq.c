@@ -16,43 +16,41 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- * @file process.c
+ * @file irq.c
  * @author Egor Anikin <egor-anikin@inbox.ru>
- * @brief FreeRTOS process test
+ * @brief FreeRTOS irq test
  */
 
 #include "FreeRTOS.h"
 #include "task.h"
-#include "semphr.h"
 #include "environment.h"
 
 #define ITER 1000000
 
 
-static void task(void *params) {
-	int cur_time, prev_time;
-	double average;
+static void vTask(void *params)
+{
+        int curTime, prevTime;
+        double average;
 
-	prev_time = clock();
-	for (int i = 0; i < ITER; i++) {
-		//irqctrl_force(IRQ_NR); 
-	}
-	cur_time = clock();
+        prevTime = clock();
+        for (int i = 0; i < ITER; i++) {
+                portYIELD_FROM_ISR(pdFALSE);
+        }
+        curTime = clock();
 
-	average = cur_time - prev_time;
+        average = curTime - prevTime;
 
-	prev_time = clock();
-	for (int i = 0; i < ITER; i++);
-	cur_time = clock();
+        prevTime = clock();
+        for (int i = 0; i < ITER; i++);
+        curTime = clock();
 
-	average = (average - cur_time + prev_time) / ITER;
-	single("IRQ", average);
+        average = (average - curTime + prevTime) / ITER;
+        single("IRQ", average);
 }
 
 void app_main(void)
 { 
-        xMutex = xSemaphoreCreateRecursiveMutex();
-
-        xTaskCreate(task, "Task 1", configMINIMAL_STACK_SIZE, (void *)0, tskIDLE_PRIORITY + 1, NULL);
+        xTaskCreate(vTask, "Task", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
         vTaskStartScheduler();
 }
