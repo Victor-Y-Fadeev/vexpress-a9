@@ -16,23 +16,43 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- * @file task.c
- * @author Victor Y. Fadeev <victor.y.fadeev@gmail.com>
- * @brief FreeRTOS task memory test
+ * @file irq.c
+ * @author Egor Anikin <egor-anikin@inbox.ru>
+ * @brief FreeRTOS irq test
  */
 
 #include "FreeRTOS.h"
 #include "task.h"
 #include "environment.h"
 
+#define ITER 1000000
+
 
 static void vTask(void *params)
 {
+        int curTime, prevTime;
+        double average;
+
+        prevTime = clock();
+        for (int i = 0; i < ITER; i++) {
+                portYIELD_FROM_ISR(pdFALSE);
+        }
+        curTime = clock();
+
+        average = curTime - prevTime;
+
+        prevTime = clock();
+        for (int i = 0; i < ITER; i++);
+        curTime = clock();
+
+        average = (average - curTime + prevTime) / ITER;
+        single("IRQ", average);
+
         vTaskDelete(NULL);
 }
 
 void app_main(void)
-{
+{ 
         xTaskCreate(vTask, "Task", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
         vTaskStartScheduler();
 }

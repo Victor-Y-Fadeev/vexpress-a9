@@ -24,7 +24,9 @@
 #ifndef ENVIRONMENT_H
 #define ENVIRONMENT_H
 
-#define clock() (xTaskGetTickCount() * portTICK_RATE_MS)
+#define clock() (xTaskGetTickCount() * portTICK_PERIOD_MS)
+
+#define PRECISION 2
 
 
 void output(const char *str, int *var, int iter);
